@@ -5,6 +5,7 @@ import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.StringSelection;
 import java.awt.datatransfer.Transferable;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
@@ -515,31 +516,34 @@ public class RedisClientWindow extends ApplicationWindow {
 		serviceLinkAction = new ServiceLinkAction();
 	}
 
+	@SuppressWarnings("unchecked")
 	private boolean queryRedisResult(RedisResultPo result, Text resultText, Text dbIndexText, Text expireTimeText) {
 		if (result == null || result.getResult() == null) {
 			resultText.setText("没数据");
 		} else {
+			List<Object> list = new ArrayList<>();
+			dbIndexText.setText(String.valueOf(result.getDbIndex()));
+			if ("List".equals(result.getType())) {
+				list = (List<Object>) result.getResult();
+				resultLabelNums.setText(list.size() + "");
+			} else {
+				resultLabelNums.setText("1");
+			}
+			resultText.setText(result.getResult().toString());
 			Long expireTime = result.getExpireTime();
 			if (expireTime == null || expireTime == -1) {
 				if (expireTime == null || "List".equals(result.getType())) {
-					expireTimeText.setText("--");
+					if ("List".equals(result.getType()) && list.size() == 1) {
+						expireTimeText.setText(expireTime == -1 ? "永久" : "" + expireTime);
+					} else {
+						expireTimeText.setText("--");
+					}
 				} else {
 					expireTimeText.setText("永久");
 				}
 
 			} else {
 				expireTimeText.setText(String.valueOf(expireTime));
-			}
-			dbIndexText.setText(String.valueOf(result.getDbIndex()));
-			if (result != null) {
-				if ("List".equals(result.getType())) {
-					@SuppressWarnings("unchecked")
-					List<Object> list = (List<Object>) result.getResult();
-					resultLabelNums.setText(list.size() + "");
-				} else {
-					resultLabelNums.setText("1");
-				}
-				resultText.setText(result.getResult().toString());
 			}
 		}
 		if (StringUtils.isNotBlank(host)) {
