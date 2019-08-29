@@ -19,6 +19,7 @@ public class CacheConstant {
 	public static final String REDIS_PREFIX_FILE = "redis_prefix";
 	public static final String REDIS_SERVER_FILE = "redis_server";
 	public static final String REDIS_HOST = "redis.host";
+	public static final String REDIS_NAME = "redis.name";
 	public static final String REDIS_PORT = "redis.port";
 	public static final String REDIS_PASSWORD = "redis.password";
 	public static final String REDIS_DB = "redis.db";

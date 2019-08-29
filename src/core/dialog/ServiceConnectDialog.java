@@ -60,6 +60,7 @@ public class ServiceConnectDialog extends Dialog {
 			}
 			Map<String, String> map = new HashMap<>();
 			map.put(CacheConstant.REDIS_HOST, hostTest.getText());
+			map.put(CacheConstant.REDIS_NAME, hostNameText.getText());
 			map.put(CacheConstant.REDIS_PORT, prot);
 			map.put(CacheConstant.REDIS_PASSWORD, passwordText.getText());
 			map.put(CacheConstant.REDIS_DB, dbIndex);
@@ -187,7 +188,7 @@ public class ServiceConnectDialog extends Dialog {
 	private void initData() {
 		Map<String, String> hostFileMap = PropertiesUtil.readPropertiesByFile(CacheConstant.REDIS_HOST_FILE);
 		if (hostFileMap != null && hostFileMap.size() > 0) {
-			hostNameText.setText(Optional.ofNullable(hostFileMap.get(CacheConstant.REDIS_HOST)).orElse(""));
+			hostNameText.setText(Optional.ofNullable(hostFileMap.get(CacheConstant.REDIS_NAME)).orElse(""));
 			hostTest.setText(Optional.ofNullable(hostFileMap.get(CacheConstant.REDIS_HOST)).orElse(""));
 			portText.setText(Optional.ofNullable(hostFileMap.get(CacheConstant.REDIS_PORT)).orElse(""));
 			passwordText.setText(Optional.ofNullable(hostFileMap.get(CacheConstant.REDIS_PASSWORD)).orElse(""));

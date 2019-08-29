@@ -109,6 +109,7 @@ public class RedisClientWindow extends ApplicationWindow {
 
 	private String host;
 	private String port;
+	private String hostName;
 	private String dbIndex;
 	private Text redisKeyText;
 	private Text resultText;
@@ -250,6 +251,7 @@ public class RedisClientWindow extends ApplicationWindow {
 					MessageDialog.openWarning(getShell(), "警告", "查找的数据不能为空！ ");
 				} else {
 					host = CacheConstant.redisConfigMap.get(CacheConstant.REDIS_HOST);
+					hostName = CacheConstant.redisConfigMap.get(CacheConstant.REDIS_NAME);
 					port = CacheConstant.redisConfigMap.get(CacheConstant.REDIS_PORT);
 					dbIndex = CacheConstant.redisConfigMap.get(CacheConstant.REDIS_DB);
 					String msg = "【" + host + ":" + port + "】 查询中...";
@@ -484,6 +486,7 @@ public class RedisClientWindow extends ApplicationWindow {
 	protected StatusLineManager createStatusLineManager() {
 		StatusLineManager statusLineManager = new StatusLineManager();
 		host = CacheConstant.redisConfigMap.get(CacheConstant.REDIS_HOST);
+		hostName = CacheConstant.redisConfigMap.get(CacheConstant.REDIS_NAME);
 		port = CacheConstant.redisConfigMap.get(CacheConstant.REDIS_PORT);
 		dbIndex = CacheConstant.redisConfigMap.get(CacheConstant.REDIS_DB);
 		statusLineManager.setMessage(host);
@@ -551,7 +554,10 @@ public class RedisClientWindow extends ApplicationWindow {
 			if (redisConnectMsg != null) {
 				String msg = redisConnectMsg.getResultMsg() + "【" + host + ":" + port + "】 ";
 				if (dbIndex != null) {
-					msg += (" db：" + dbIndex);
+					msg += ("  use-db：【" + dbIndex + "】");
+				}
+				if (hostName != null && !hostName.equals(host)) {
+					msg += ("  redis-name：【" + hostName + "】");
 				}
 				RedisClientWindow.getRedisClientWindow().getStatusLineManager().setMessage(msg);
 			}
