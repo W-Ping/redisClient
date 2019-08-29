@@ -38,7 +38,10 @@ public class JSONFormatUtil {
 				break;
 			case ',':
 				int preIndex = index - 1;
-				if (preIndex >= 0 && !"\"".equals(String.valueOf(json.charAt(preIndex)))) {
+				int nextIndex = index + 1;
+				boolean f = nextIndex >= 0 && nextIndex < json.length()
+						&& "\"".equals(String.valueOf(json.charAt(nextIndex)));
+				if (preIndex >= 0 && !"\"".equals(String.valueOf(json.charAt(preIndex))) && !f) {
 					jsonForMatStr.append(c);
 				} else {
 					jsonForMatStr.append(c + "\n");
