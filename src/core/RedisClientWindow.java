@@ -421,6 +421,7 @@ public class RedisClientWindow extends ApplicationWindow {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				setClipboardString(resultText.getText());
+				MessageDialog.openInformation(getShell(), "提醒", "已复制到剪贴板");
 			}
 		});
 		btnNewButton_1.setBounds(694, 179, 80, 27);
